@@ -1,5 +1,5 @@
 # python-srt2ass
-Python script to convert Subtitle formats from `.srt` to `.ass`. By default it will add black background (opaque box) with yellow font color, useful to hide foreign hardsub from movie
+Python script to convert Subtitle formats from `.srt` to `.ass`. Forked from [ewwink/python-srt2ass](https://github.com/ewwink/python-srt2ass) to change line ending to CRLF (as SubStation Alpha format spec states that ssa scripts are DOS text files) and apply my own preferred style.
 
 ## Requirements ##
 
@@ -14,7 +14,9 @@ Python script to convert Subtitle formats from `.srt` to `.ass`. By default it w
 using command line
 
     python srt2ass.py file1.srt
-    or
+    
+or
+
     python srt2ass.py file1.srt file2.srt file3.srt
 
 using as module

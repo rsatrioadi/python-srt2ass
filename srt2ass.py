@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-# python-srt2ass: https://github.com/ewwink/python-srt2ass
-# by: ewwink
-#
+# python-srt2ass forked from https://github.com/ewwink/python-srt2ass
+# 
+# edits: style, line ending (CRLF)
 
 import sys
+import io
 import os
 import re
 import codecs
@@ -61,7 +62,7 @@ def srt2ass(input_file):
         else:
             if re.match('-?\d\d:\d\d:\d\d', line):
                 line = line.replace('-0', '0')
-                tmpLines += 'Dialogue: 0,' + line + ',SubStyle,,0,0,0,,'
+                tmpLines += 'Dialogue: 0,' + line + ',Default,,0,0,0,,'
             else:
                 if lineCount < 2:
                     tmpLines += line
@@ -82,23 +83,22 @@ def srt2ass(input_file):
     subLines = re.sub(r'</font>', "", subLines)
 
     head_str = '''[Script Info]
-; This is an Advanced Sub Station Alpha v4+ script.
 Title:
 ScriptType: v4.00+
 Collisions: Normal
 PlayDepth: 0
 
-[V4+ Styles]
+[v4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: SubStyle,Arial,20,&H0300FFFF,&H00FFFFFF,&H00000000,&H02000000,-1,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
+Style: Default,Arial,20,&H00FFFFFF,&H000080FF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,2,2,2,10,10,20,0
 
 [Events]
 Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, Effect, Text'''
 
     output_str = utf8bom + head_str + '\n' + subLines
-    output_str = output_str.encode(encoding)
+    output_str = unicode(output_str)
 
-    with open(output_file, 'wb') as output:
+    with io.open(output_file, 'w', newline="\r\n") as output:
         output.write(output_str)
 
     output_file = output_file.replace('\\', '\\\\')
